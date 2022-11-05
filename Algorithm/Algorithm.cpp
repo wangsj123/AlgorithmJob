@@ -2,9 +2,12 @@
 //
 
 #include <iostream>
+#include "CTest.h"
 
 int main()
 {
+    CTest testObj;
+    testObj.testSelectSort(100, 100);
     std::cout << "Hello World!\n";
 }
 
