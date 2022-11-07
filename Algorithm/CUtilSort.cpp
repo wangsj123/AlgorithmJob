@@ -119,3 +119,28 @@ void CUtilSort::QuickSort(int arr[], int low, int high)
 	QuickSort(arr, low, i - 1);
 	QuickSort(arr, i + 1, high);
 }
+
+void CUtilSort::ShellSort(int arr[], int n)
+{
+	int i, j;
+	int step;
+
+	for (step = n / 2; step > 0;step /= 2)/*增量步长*/
+	{
+		for (i = step; i < n; i++)
+		{
+			for (j = i - step; j >= 0; j -= step)
+			{
+				if (arr[j + step] < arr[j])
+				{
+					_swap(arr[j + step], arr[j]);
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+	}
+}
