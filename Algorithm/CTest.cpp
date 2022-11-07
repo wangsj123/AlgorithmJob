@@ -71,6 +71,28 @@ bool CTest::testQuickSort(int n, int arrMax)
 	return false;
 }
 
+bool CTest::testShellSort(int n, int arrMax)
+{
+	int* iArray = new int[n];
+	generate_arr(iArray, n, arrMax);
+	float totalTime = 0.0f;
+	CpuTimer cpuTime;
+	cpuTime.Reset();
+	CUtilSort::ShellSort(iArray, n);
+	cpuTime.Tick();
+	totalTime = cpuTime.TotalTime();
+	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+#if defined _DEBUG
+	for (size_t i = 0; i < n; i++)
+	{
+		printf("%d,", iArray[i]);
+	}
+	printf("\n");
+#endif
+	delete[] iArray;
+	return false;
+}
+
 void CTest::generate_arr(int* outArr, int n, const int arrMax)
 {
 	if (outArr == NULL)

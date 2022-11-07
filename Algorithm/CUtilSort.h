@@ -14,7 +14,7 @@ public:
 
 	/**********************************************************************************
 	*
-	* function selectSort 
+	* function selectSort
 	* input arr[]: iteger array
 	* input n: array elements number
 	* output arr[]: arrays sorted from small to large
@@ -33,5 +33,6 @@ public:
 	**********************************************************************************/
 	static void MergeSort(int arr[], int low, int high);
 	static void QuickSort(int arr[], int low, int high);
+	static void ShellSort(int arr[], int n);
 };
 
