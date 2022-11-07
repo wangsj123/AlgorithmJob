@@ -6,6 +6,7 @@ public:
 	bool testMergeSort(int n, int arrMax);
 	bool testQuickSort(int n, int arrMax);
 	bool testShellSort(int n, int arrMax);
+	bool testRadixSort(int n, int arrMax);
 private:
 	static void generate_arr(int* outArr, int n, const int arrMax);
 };

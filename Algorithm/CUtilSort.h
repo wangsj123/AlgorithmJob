@@ -34,5 +34,6 @@ public:
 	static void MergeSort(int arr[], int low, int high);
 	static void QuickSort(int arr[], int low, int high);
 	static void ShellSort(int arr[], int n);
+	static void RadixSort(int arr[], int n);
 };
 
