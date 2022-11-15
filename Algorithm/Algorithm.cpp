@@ -9,11 +9,15 @@ int main()
 {
     CTest testObj;
     //testObj.testSelectSort(100, 100);
-    //testObj.testMergeSort(1e6, 1e7);
-    //testObj.testQuickSort(1e8, 1e6);
+    //testObj.testMergeSort(10000000, 1000);
+    //testObj.testQuickSort(1e7, 5000);
     //testObj.testShellSort(1000000, 10000000);
     //testObj.testRadixSort(50, 200);
-    sort();
+    //sort();
+
+    testObj.testSelectSort_BigInt(100);
+
+
     std::cout << "Hello World!\n";
 }
 

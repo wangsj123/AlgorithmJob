@@ -1,9 +1,17 @@
 #include "CUtilSort.h"
 #include "math.h"
+#include "BigInt.h"
 
 inline void CUtilSort::_swap(int& l, int& r)
 {
 	int temp = l;
+	l = r;
+	r = temp;
+}
+
+inline void CUtilSort::_swapbigint(BigInt& l, BigInt& r)
+{
+	BigInt temp = l;
 	l = r;
 	r = temp;
 }
@@ -204,4 +212,23 @@ void CUtilSort::RadixSort(int arr[], int n) {
 	delete[] tmp;
 	delete[] tmpInd;
 
+}
+
+void CUtilSort::selectSortBigInt(BigInt arr[], int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		int minIndex = i;
+		for (int j = i + 1; j < n; ++j)
+		{
+			if (CmpBigInt(arr[j], arr[minIndex]))
+			{
+				minIndex = j;
+			}
+		}
+		if (minIndex != i)
+		{
+			_swapbigint(arr[i], arr[minIndex]);
+		}
+	}
 }

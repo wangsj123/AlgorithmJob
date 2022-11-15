@@ -4,6 +4,7 @@ class CUtilSort
 private:
 	static void Merge(int instance[], int low, int mid, int high);
 public:
+	inline static void _swapbigint(BigInt& l, BigInt& r);
 	/**********************************************************************************
 	*
 	* function _swap
@@ -35,5 +36,8 @@ public:
 	static void QuickSort(int arr[], int low, int high);
 	static void ShellSort(int arr[], int n);
 	static void RadixSort(int arr[], int n);
+
+	static void selectSortBigInt(BigInt arr[], int n);
+
 };
 
