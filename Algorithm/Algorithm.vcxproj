@@ -133,6 +133,7 @@
     <ClCompile Include="CUtilSort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BigInt.h" />
     <ClInclude Include="CpuTimer.h" />
     <ClInclude Include="CTest.h" />
     <ClInclude Include="CUtilSort.h" />

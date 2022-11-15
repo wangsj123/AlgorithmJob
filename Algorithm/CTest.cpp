@@ -102,9 +102,7 @@ void CTest::generate_arr(int* outArr, int n, const int arrMax)
 	srand(unsigned(time(0)));
 	for (int i = 0; i < n; i++)
 	{
-		//int itemp = rand() % MAX_NUM;
-		//unsigned int itemp = (long long)((double)(rand() * MAX_NUM) / RAND_MAX);
-		int itemp = (int)((double)(rand() * arrMax) / RAND_MAX);
+		int itemp = arrMax < RAND_MAX ? rand() % arrMax : (int)((double)(rand() * arrMax) / RAND_MAX);
 		outArr[i] = itemp;
 	}
 }
