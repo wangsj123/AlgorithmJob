@@ -45,16 +45,31 @@ typedef struct BigInt //定义大整数
 
 }BigInt;
 
+
 int CmpBigInt(BigInt S, BigInt T) {
 	if (S.Sign == T.Sign) { //如果同号则比较值的大小
 
 		if (S.Value == T.Value) return 0;
 		if (S.Sign = 1) {
-			return S.Value.compare(T.Value);
+			if (S.Length == T.Length)
+			{
+				return S.Value.compare(T.Value);
+			}
+			else
+			{
+				return S.Length > T.Length ? 1 : -1;
+			}
 		}
 		else
 		{
-			return -S.Value.compare(T.Value);
+			if (S.Length == T.Length)
+			{
+				return -S.Value.compare(T.Value);
+			}
+			else
+			{
+				return S.Length > T.Length ? -1 : 1;
+			}
 		}
 	}
 	else {
