@@ -3,15 +3,17 @@
 
 #include <iostream>
 #include "CTest.h"
+#include "MTSort.h"
 
 int main()
 {
     CTest testObj;
     //testObj.testSelectSort(100, 100);
-    //testObj.testMergeSort(100, 200);
-    //testObj.testQuickSort(50, 200);
-    //testObj.testShellSort(50, 200);
-    testObj.testRadixSort(50, 200);
+    //testObj.testMergeSort(1e6, 1e7);
+    //testObj.testQuickSort(1e8, 1e6);
+    //testObj.testShellSort(1000000, 10000000);
+    //testObj.testRadixSort(50, 200);
+    sort();
     std::cout << "Hello World!\n";
 }
 
