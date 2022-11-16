@@ -7,18 +7,20 @@
 
 int main()
 {
-    CTest testObj;
-    //testObj.testSelectSort(100, 100);
-    //testObj.testMergeSort(10000000, 1000);
-    //testObj.testQuickSort(1e7, 5000);
-    //testObj.testShellSort(1000000, 10000000);
-    //testObj.testRadixSort(50, 200);
-    //sort();
+	CTest testObj;
+	//testObj.testSelectSort(100, 100);
+	//testObj.testMergeSort(10000000, 1000);
+	//testObj.testQuickSort(1e7, 5000);
+	//testObj.testShellSort(1000000, 10000000);
+	//testObj.testRadixSort(50, 200);
+	//sort();
 
-    testObj.testSelectSort_BigInt(100);
+	//testObj.testSelectSort_BigInt(200);
+	//testObj.testMergeSort_BigInt(200);
+	//testObj.testQuickSort_BigInt(200);
+	testObj.testShellSort_BigInt(200);
 
-
-    std::cout << "Hello World!\n";
+	std::cout << "Hello World!\n";
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

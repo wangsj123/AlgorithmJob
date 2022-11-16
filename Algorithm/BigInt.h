@@ -50,7 +50,7 @@ static int CmpBigInt(BigInt S, BigInt T) {
 	if (S.Sign == T.Sign) { //如果同号则比较值的大小
 
 		if (S.Value == T.Value) return 0;
-		if (S.Sign = 1) {
+		if (S.Sign == 1) {
 			if (S.Length == T.Length)
 			{
 				return S.Value.compare(T.Value);

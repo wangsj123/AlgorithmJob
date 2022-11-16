@@ -214,6 +214,8 @@ void CUtilSort::RadixSort(int arr[], int n) {
 
 }
 
+
+
 void CUtilSort::selectSortBigInt(BigInt arr[], int n)
 {
 	for (int i = 0; i < n; i++)
@@ -221,7 +223,7 @@ void CUtilSort::selectSortBigInt(BigInt arr[], int n)
 		int minIndex = i;
 		for (int j = i + 1; j < n; ++j)
 		{
-			if (CmpBigInt(arr[j], arr[minIndex]))
+			if (CmpBigInt(arr[j], arr[minIndex]) == -1)
 			{
 				minIndex = j;
 			}
@@ -232,3 +234,121 @@ void CUtilSort::selectSortBigInt(BigInt arr[], int n)
 		}
 	}
 }
+
+void CUtilSort::MergeSortBigInt(BigInt instance[], int low, int high)
+{
+	int mid;
+	if (low < high)
+	{
+		mid = (low + high) / 2;
+		MergeSortBigInt(instance, low, mid);
+		MergeSortBigInt(instance, mid + 1, high);
+		MergeBigInt(instance, low, mid, high);
+	}
+}
+void CUtilSort::MergeBigInt(BigInt instance[], int low, int mid, int high)
+{
+	int left = mid - low + 1;
+	int right = high - mid;
+	BigInt* leftmarge = new BigInt[left];
+	BigInt* rightmarge = new BigInt[right];
+	for (int i = 0; i < left; i++)
+	{
+		leftmarge[i] = instance[low + i];
+	}
+	for (int i = 0; i < right; i++)
+	{
+		rightmarge[i] = instance[mid + 1 + i];
+	}
+
+	int l = 0, r = 0;
+	for (int i = low; i <= high; i++)
+	{
+		if (l == left)
+		{
+			instance[i] = rightmarge[r];
+			r++;
+		}
+		else if (r == right)
+		{
+			instance[i] = leftmarge[l];
+			l++;
+		}
+		else {
+			if (CmpBigInt(leftmarge[l], rightmarge[r]) == -1)
+			{
+				instance[i] = leftmarge[l];
+				l++;
+			}
+			else
+			{
+				instance[i] = rightmarge[r];
+				r++;
+			}
+		}
+	}
+}
+
+void CUtilSort::QuickSortBigInt(BigInt arr[], int low, int high)
+{
+	if (low >= high)
+	{
+		return;
+	}
+	int i = low;
+	int j = high;
+	BigInt key = arr[high];
+	while (true)
+	{
+		while (CmpBigInt(arr[i], key) != 1)
+		{
+			i++;
+			if (i == high)
+			{
+				break;
+			}
+		}
+		while (CmpBigInt(arr[j], key) != -1)
+		{
+			j--;
+			if (j == low)
+			{
+				break;
+			}
+		}
+		if (i >= j)
+		{
+			break;
+		}
+		_swapbigint(arr[i], arr[j]);
+	}
+	_swapbigint(arr[i], arr[high]);
+	QuickSortBigInt(arr, low, i - 1);
+	QuickSortBigInt(arr, i + 1, high);
+}
+
+void CUtilSort::ShellSortBigInt(BigInt arr[], int n)
+{
+	int i, j;
+	int step;
+
+	for (step = n / 2; step > 0;step /= 2)/*增量步长*/
+	{
+		for (i = step; i < n; i++)
+		{
+			for (j = i - step; j >= 0; j -= step)
+			{
+				if (CmpBigInt(arr[j + step], arr[j]) == -1)
+				{
+					_swapbigint(arr[j + step], arr[j]);
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+	}
+}
+
