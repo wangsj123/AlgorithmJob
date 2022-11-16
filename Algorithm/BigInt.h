@@ -1,5 +1,5 @@
-#include <string>
 #pragma once
+#include <string>
 using namespace std;
 
 typedef struct BigInt //定义大整数
@@ -46,7 +46,7 @@ typedef struct BigInt //定义大整数
 }BigInt;
 
 
-int CmpBigInt(BigInt S, BigInt T) {
+static int CmpBigInt(BigInt S, BigInt T) {
 	if (S.Sign == T.Sign) { //如果同号则比较值的大小
 
 		if (S.Value == T.Value) return 0;

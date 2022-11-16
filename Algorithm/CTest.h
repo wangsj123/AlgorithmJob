@@ -1,4 +1,5 @@
 #pragma once
+#include "BigInt.h"
 class CTest
 {
 public:
