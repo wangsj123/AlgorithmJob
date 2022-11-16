@@ -13,9 +13,12 @@ int main()
     //testObj.testQuickSort(1e7, 5000);
     //testObj.testShellSort(1000000, 10000000);
     //testObj.testRadixSort(50, 200);
-    //sort();
+    //MTSort(1, 1e7);
+    for (int i = 1;i < 25;i += 1) {
+        MTSort(i, 5e7);
+    }
 
-    testObj.testSelectSort_BigInt(100);
+    //testObj.testSelectSort_BigInt(100);
 
 
     std::cout << "Hello World!\n";

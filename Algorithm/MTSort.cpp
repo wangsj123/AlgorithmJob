@@ -8,23 +8,29 @@
 
 using namespace std;
 
-const long MAX = 1e8L; // max num in array
-const long long MAX_NUM = 1e7L;  // num of element to sort
-const int THREAD = 25;  //num of thread
-const int thread_num = MAX_NUM / THREAD;  //num of element for each thread
+const long MAX = 1e10L; // max num in array
+//const long long MAX_NUM = 1e2L;  // num of element to sort
 
-int num[MAX_NUM];
-int tmp_num[MAX_NUM];
+
+//int num[MAX_NUM];
+//int tmp_num[MAX_NUM];
 
 mutex M;  //mutex
 
 //Initialized Data
-void init()
+int* init_arr(int total_num)
 {
     srand(1);
-    for (int i = 0; i < MAX_NUM; ++i) {
-        num[i] = rand() % MAX; //random int less than MAX
+    int* arr = (int *)malloc(sizeof(int)*total_num);
+    if (arr == NULL){
+        cout << "merge malloc failed\n";
+        exit(-1);
     }
+
+    for (int i = 0; i < total_num; ++i) {
+        arr[i] = rand() % MAX; //random int less than MAX
+    }
+    return arr;
 }
 
 //Quick sort function
@@ -52,73 +58,118 @@ void qsorts(int* start, int* end) {
 }
 
 //sort worker
-void work(long ind) {
-    long index = ind;
-    lock_guard<std::mutex> lockGuard(M);  //thread lock and auto unlock
+void work(int * start,int* end) {
 
-    qsorts(num + index, num + index + thread_num - 1);
-   
+    //lock_guard<std::mutex> lockGuard(M);  //thread lock and auto unlock
+
+    qsorts(start, end);
+    
 }
 
 //merge the array
-void merge()
+int* merge(int* arr,int seg_num,int total)
 {
-    long index[THREAD];
-    for (int i = 0; i < THREAD; ++i)
+    int* tmp = (int*)malloc(sizeof(int) * total);
+    if (tmp == NULL) {
+        cout << "merge malloc failed\n";
+        exit(-1);
+    }
+    int num_in_seg = total / seg_num;
+
+    long* index=new long[seg_num];
+    for (int i = 0; i < seg_num; ++i)
     {
-        index[i] = i * thread_num;
+        index[i] = i * num_in_seg;
     }
 
-    for (long i = 0; i < MAX_NUM; ++i)
+    for (long i = 0; i < total; ++i)
     {
-        long min_index;
+        long min_index = 0;
         long min_num = MAX;
-        for (int j = 0; j < THREAD; ++j)
+        for (int j = 0; j < seg_num; ++j)
         {
-            if ((index[j] < (j + 1) * thread_num)
-                && (num[index[j]] < min_num))
+            if ((index[j] < (j + 1) * num_in_seg 
+                || (j==seg_num-1)&& index[j] < total)  //对最后一组序列，允许其超过平均大小但是要小于总长度
+                && (arr[index[j]] < min_num))
             {
                 min_index = j;
-                min_num = num[index[j]];
+                min_num = arr[index[j]];
             }
         }
-        tmp_num[i] = num[index[min_index]];
+        tmp[i] = arr[index[min_index]];
         index[min_index]++;
     }
+    return tmp;
 }
 
 
 
-void sort()
+int* mul_thread_sort(int* arr,int thread_num,int total_num)
 {
-    init(); //array inited by random num
-
-    printf("length of array:%d\n", MAX_NUM);
 
     float totalTime = 0.0f;
     CpuTimer cpuTime;
     cpuTime.Reset();
-    
-    
 
-    thread threads[THREAD];  //create threads
+    
+    int num_per_thread = total_num / thread_num;  //num of element for each thread
+    thread* threads=new thread[thread_num];  //create threads
 
-    cout << "Spawning  threads...\n";
-    for (int i = 0; i < THREAD; ++i) {
-        threads[i] = thread(work, (i * thread_num)); // create worker
+    printf("Spawning %d threads...\n",thread_num);
+    for (int i = 0; i < thread_num; ++i) { // create worker
+        if (i < thread_num - 1) {
+            threads[i] = thread(work, arr + (i * num_per_thread) , arr + ((i+1)*num_per_thread)-1);
+        }
+        else {
+            threads[i] = thread(work, arr + (i * num_per_thread),arr+total_num-1);  //arrange reset element for the last thread  //对于最后一个线程，将剩余元素全部分配给他
+        }
     }
 
-    for (auto& thread : threads) {
-        thread.join();
+    for (int i = 0; i < thread_num; ++i) {
+        threads[i].join();
     }
-
-
-    merge();
+   
+    int* res=merge(arr,thread_num,total_num);
 
     cpuTime.Tick();
     totalTime = cpuTime.TotalTime();
     printf("Total time: %.7f\n", totalTime);
- 
+
+
     
-    //for (int i = 0;i < MAX_NUM;i++)cout << num[i] << " ";
+    return res;
+}   
+
+void test_qsort(int* arr, int total) { // test time used by normal qsort 
+        float totalTime = 0.0f;
+        CpuTimer cpuTime;
+        cpuTime.Reset();
+
+        qsorts(arr, arr + total - 1);
+        
+        cpuTime.Tick();
+        totalTime = cpuTime.TotalTime();
+        printf("Total time by qsort: %.7f\n", totalTime);
+
+
+
+}
+
+void find_err(int* arr, int len) {
+    for (int i = 0;i < len;i++) {
+        if (i > 0 && arr[i - 1] > arr[i]) {
+            cout << "wrong:" << arr[i - 1] <<" " << arr[i] << endl;
+            getchar();
+        }/*else {
+            cout << arr[i] << " ";
+        }*/
+    }
+}
+
+void MTSort(int thread_num, int total_num) {
+    int* arr=init_arr(total_num); //array inited by random num
+    
+    int* res = mul_thread_sort(arr,thread_num, total_num);  //multiple thread sort
+    find_err(res, total_num);  //detect if any element is less than the former
+    //test_qsort(arr, total_num);  
 }

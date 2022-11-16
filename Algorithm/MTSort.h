@@ -1,2 +1,2 @@
 #pragma once
-void sort();
+void MTSort(int thread_num, int total_num);
