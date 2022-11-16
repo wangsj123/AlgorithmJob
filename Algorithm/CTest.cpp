@@ -131,7 +131,7 @@ bool CTest::testSelectSort_BigInt(int n)
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
-		printf("%s%s\n", iArray[i].Sign == 1?"":"-",iArray[i].Value);
+		printf("%s%s\n", (iArray[i].Sign == 1 ? "" : "-"), iArray[i].Value.c_str());
 	}
 	printf("\n");
 #endif
@@ -139,6 +139,73 @@ bool CTest::testSelectSort_BigInt(int n)
 	delete[] iArray;
 	return false;
 }
+
+bool CTest::testMergeSort_BigInt(int n)
+{
+	BigInt* iArray = new BigInt[n];
+	generate_BigIntarr(iArray, n);
+	float totalTime = 0.0f;
+	CpuTimer cpuTime;
+	cpuTime.Reset();
+	CUtilSort::MergeSortBigInt(iArray, 0, n - 1);
+	cpuTime.Tick();
+	totalTime = cpuTime.TotalTime();
+	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+#if defined _DEBUG
+	for (size_t i = 0; i < n; i++)
+	{
+		printf("%s%s\n", (iArray[i].Sign == 1 ? "" : "-"), iArray[i].Value.c_str());
+	}
+	printf("\n");
+#endif
+	delete[] iArray;
+	return false;
+}
+
+bool CTest::testQuickSort_BigInt(int n)
+{
+	BigInt* iArray = new BigInt[n];
+	generate_BigIntarr(iArray, n);
+	float totalTime = 0.0f;
+	CpuTimer cpuTime;
+	cpuTime.Reset();
+	CUtilSort::QuickSortBigInt(iArray, 0, n - 1);
+	cpuTime.Tick();
+	totalTime = cpuTime.TotalTime();
+	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+#if defined _DEBUG
+	for (size_t i = 0; i < n; i++)
+	{
+		printf("%s%s\n", (iArray[i].Sign == 1 ? "" : "-"), iArray[i].Value.c_str());
+	}
+	printf("\n");
+#endif
+	delete[] iArray;
+	return false;
+}
+
+bool CTest::testShellSort_BigInt(int n)
+{
+	BigInt* iArray = new BigInt[n];
+	generate_BigIntarr(iArray, n);
+	float totalTime = 0.0f;
+	CpuTimer cpuTime;
+	cpuTime.Reset();
+	CUtilSort::ShellSortBigInt(iArray, n);
+	cpuTime.Tick();
+	totalTime = cpuTime.TotalTime();
+	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+#if defined _DEBUG
+	for (size_t i = 0; i < n; i++)
+	{
+		printf("%s%s\n", (iArray[i].Sign == 1 ? "" : "-"), iArray[i].Value.c_str());
+	}
+	printf("\n");
+#endif
+	delete[] iArray;
+	return false;
+}
+
 
 void CTest::generate_arr(int* outArr, int n, const int arrMax)
 {
@@ -165,15 +232,25 @@ void CTest::generate_BigIntarr(BigInt* outArr, int n)
 	{
 		outArr[i].Sign = (rand() % 2) == 0 ? 1 : -1;
 		outArr[i].Length = rand() % 100;
-		for (int j = 0; j < outArr[i].Length; j++)
+		if (outArr[i].Length == 0)
 		{
-			int r = rand() % 10;
-			if (j == 0 && r == 0)
-			{
-				j--;
-				continue;
-			}
-			outArr[i].Value += r;
+			outArr[i].Sign = 1;
+			outArr[i].Length = 1;
+			outArr[i].Value = "0";
 		}
+		else
+		{
+			for (int j = 0; j < outArr[i].Length; j++)
+			{
+				int r = rand() % 10;
+				if (j == 0 && r == 0)
+				{
+					j--;
+					continue;
+				}
+				outArr[i].Value.append(to_string(r));
+			}
+		}
+
 	}
 }
