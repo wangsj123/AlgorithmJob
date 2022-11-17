@@ -9,18 +9,14 @@
 using namespace std;
 
 const long MAX = 1e10L; // max num in array
-//const long long MAX_NUM = 1e2L;  // num of element to sort
-
-
-//int num[MAX_NUM];
-//int tmp_num[MAX_NUM];
+const int RAND_SEED = 1;
 
 mutex M;  //mutex
 
 //Initialized Data
 int* init_arr(int total_num)
 {
-    srand(1);
+    srand(RAND_SEED);
     int* arr = (int *)malloc(sizeof(int)*total_num);
     if (arr == NULL){
         cout << "merge malloc failed\n";
@@ -103,7 +99,7 @@ int* merge(int* arr,int seg_num,int total)
 }
 
 
-
+//implement multiple thread sort
 int* mul_thread_sort(int* arr,int thread_num,int total_num)
 {
 
@@ -140,7 +136,8 @@ int* mul_thread_sort(int* arr,int thread_num,int total_num)
     return res;
 }   
 
-void test_qsort(int* arr, int total) { // test time used by normal qsort 
+// test time used by normal qsort 
+void test_qsort(int* arr, int total) { 
         float totalTime = 0.0f;
         CpuTimer cpuTime;
         cpuTime.Reset();
@@ -155,6 +152,7 @@ void test_qsort(int* arr, int total) { // test time used by normal qsort
 
 }
 
+//find descending pair inf ascending sorted array
 void find_err(int* arr, int len) {
     for (int i = 0;i < len;i++) {
         if (i > 0 && arr[i - 1] > arr[i]) {
