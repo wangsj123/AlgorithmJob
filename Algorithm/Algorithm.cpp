@@ -14,11 +14,18 @@ int main()
     //testObj.testShellSort(1000000, 10000000);
     //testObj.testRadixSort(50, 200);
     //MTSort(1, 1e7);
-    for (int i = 1;i < 25;i += 1) {
-        MTSort(i, 5e7);
-    }
 
-    //testObj.testSelectSort_BigInt(100);
+    //for (int i = 1;i < 25;i += 1) {
+    //    MTSort(i, 5e7);
+    //}
+
+
+    //大数排序部分
+    testObj.testSelectSort_BigInt(500);
+    testObj.testMergeSort_BigInt(500);
+    testObj.testQuickSort_BigInt(500);
+    testObj.testShellSort_BigInt(500);
+    testObj.testRadixSort_BigInt(500);
 
 
 	std::cout << "Hello World!\n";

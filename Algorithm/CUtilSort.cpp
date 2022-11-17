@@ -352,3 +352,89 @@ void CUtilSort::ShellSortBigInt(BigInt arr[], int n)
 	}
 }
 
+void CUtilSort::RadixSortBigInt(BigInt arr[], int n) {
+
+	int pindex;
+	int pmaxl = 0, nmaxl = 0;//记录正数最长位数与负数最长位数,确定循环次数
+	//先将数据分为两段，左边为负数，右边为正数
+	int i = 0, j = n - 1;
+	while (i < j)
+	{
+		while (arr[i].Sign == -1)
+		{
+			if (nmaxl < arr[i].Length)
+			{
+				nmaxl = arr[i].Length;
+			}
+			i++;
+		}
+		while (arr[j].Sign == 1)
+		{
+			if (pmaxl < arr[j].Length)
+			{
+				pmaxl = arr[j].Length;
+			}
+			j--;
+		}
+		if (i < j)
+		{
+			_swapbigint(arr[i], arr[j]);
+		}
+	}
+	pindex = i;//记录第一个正数开始的位置
+
+	BigIntRadix(arr, 0, pindex - 1, nmaxl);
+	//将负数部分逆序
+	i = 0, j = pindex - 1;
+	while (i < j)
+	{
+		_swapbigint(arr[i], arr[j]);
+		i++;j--;
+	}
+
+	BigIntRadix(arr, pindex, n - 1, pmaxl);
+
+}
+
+void CUtilSort::BigIntRadix(BigInt arr[], int low, int high, int loopcount) {
+	int n = high - low + 1;
+	BigInt* tmp = new BigInt[n];//存储每一次排序的数列,分为10段（0-9）
+	int* tmpInd = new int[10]; //存储每个桶的元素在tmp中最大的索引位置
+	int radix = 1;
+	for (int i = 0; i < loopcount; i++)
+	{
+		//首先计算每个桶中的元素个数
+		//个数初始化
+		for (int j = 0; j < 10; j++)
+		{
+			tmpInd[j] = 0;
+		}
+		for (int j = low; j <= high; j++)
+		{
+			int k = GetIndexNum(arr[j], radix);
+			tmpInd[k]++;
+		}
+		//然后把tmpInd变为最大索引值
+		tmpInd[0]--;
+		for (int j = 1; j < 10; j++)
+		{
+			tmpInd[j] += tmpInd[j - 1];
+		}
+		//循环arr，把数据放到tmp
+		for (int j = high; j >= low; j--)
+		{
+			int k = GetIndexNum(arr[j], radix);
+			tmp[tmpInd[k]] = arr[j];
+			tmpInd[k]--;
+		}
+		//重新赋值arr
+		for (int j = low, i = 0; j <= high; j++, i++)
+		{
+			arr[j] = tmp[i];
+		}
+		radix++;
+	}
+	delete[] tmp;
+	delete[] tmpInd;
+
+}

@@ -39,7 +39,7 @@ bool CTest::testMergeSort(int n, int arrMax)
 	CUtilSort::MergeSort(iArray, 0, n - 1);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("mergeSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
@@ -61,7 +61,7 @@ bool CTest::testQuickSort(int n, int arrMax)
 	CUtilSort::QuickSort(iArray, 0, n - 1);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("quickSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
@@ -83,7 +83,7 @@ bool CTest::testShellSort(int n, int arrMax)
 	CUtilSort::ShellSort(iArray, n);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("shellSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
@@ -105,7 +105,7 @@ bool CTest::testRadixSort(int n, int arrMax)
 	CUtilSort::RadixSort(iArray, n);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("radixSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
@@ -150,7 +150,7 @@ bool CTest::testMergeSort_BigInt(int n)
 	CUtilSort::MergeSortBigInt(iArray, 0, n - 1);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("mergeSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
@@ -172,7 +172,7 @@ bool CTest::testQuickSort_BigInt(int n)
 	CUtilSort::QuickSortBigInt(iArray, 0, n - 1);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("quickSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{
@@ -194,7 +194,29 @@ bool CTest::testShellSort_BigInt(int n)
 	CUtilSort::ShellSortBigInt(iArray, n);
 	cpuTime.Tick();
 	totalTime = cpuTime.TotalTime();
-	printf("selectSort: Array size %d,sort time: %.7f\n", n, totalTime);
+	printf("shellSort: Array size %d,sort time: %.7f\n", n, totalTime);
+#if defined _DEBUG
+	for (size_t i = 0; i < n; i++)
+	{
+		printf("%s%s\n", (iArray[i].Sign == 1 ? "" : "-"), iArray[i].Value.c_str());
+	}
+	printf("\n");
+#endif
+	delete[] iArray;
+	return false;
+}
+
+bool CTest::testRadixSort_BigInt(int n)
+{
+	BigInt* iArray = new BigInt[n];
+	generate_BigIntarr(iArray, n);
+	float totalTime = 0.0f;
+	CpuTimer cpuTime;
+	cpuTime.Reset();
+	CUtilSort::RadixSortBigInt(iArray, n);
+	cpuTime.Tick();
+	totalTime = cpuTime.TotalTime();
+	printf("radixSort: Array size %d,sort time: %.7f\n", n, totalTime);
 #if defined _DEBUG
 	for (size_t i = 0; i < n; i++)
 	{

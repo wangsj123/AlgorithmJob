@@ -82,3 +82,15 @@ static int CmpBigInt(BigInt S, BigInt T) {
 
 	}
 }
+
+//获取数字串从右往左第ind位的数字，没有则返回0
+static int GetIndexNum(BigInt BI, int ind) {
+	if (ind > BI.Length)
+	{
+		return 0;
+	}
+	else {
+		char c = BI.Value[BI.Length - ind];
+		return c-48;
+	}
+}
