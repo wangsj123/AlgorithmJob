@@ -33,3 +33,16 @@ struct BigInt //定义大整数
 | 归并排序 | 0.3658s | 3.78s |  |
 
 当线程数过多时，线程的创建开销也会增大。要选择合适的线程数目。
+## 线程数与算法耗时
+当数据规模在1e6-1e7之间时：
+![f9aebd96d978d54e19d66c4a4aeb733](https://user-images.githubusercontent.com/27942089/202899657-a737848a-2c91-42f8-bf73-42c2c9ae2e83.png)
+
+当数据规模在1e7-1e8之间时：
+![90c664fb7df1b1d96670b324e1c1c7e](https://user-images.githubusercontent.com/27942089/202899664-d8115f4a-3879-436f-992c-d93a2dbfbb07.png)
+
+当数据规模在1e8-1e9之间时：
+![3428e5d4183c07c234f37ca2eb434a8](https://user-images.githubusercontent.com/27942089/202899710-5fc8eb38-421b-4ecb-82d5-51e730e8af42.png)
+
+通过计算时间消耗与线程数的导数，发现曲线最低点对应的大致线程数。当导数由负变为正时，意味着合适的线程数在当前点和前一点之间。
+
+$$\frac{time[i]-time[i-1]}{thread[i]-thread[i-1]}$$
