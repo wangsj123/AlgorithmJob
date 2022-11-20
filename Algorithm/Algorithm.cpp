@@ -4,31 +4,39 @@
 #include <iostream>
 #include "CTest.h"
 #include "MTSort.h"
-
+#define MAXVAL 10000
+#define TESTSCALE 100
 int main()
 {
     CTest testObj;
-    //testObj.testSelectSort(100, 100);
-    //testObj.testMergeSort(10000000, 1000);
-    //testObj.testQuickSort(1e7, 5000);
-    //testObj.testShellSort(1000000, 10000000);
-    //testObj.testRadixSort(50, 200);
-    //MTSort(1, 1e7);
-
-    //for (int i = 1;i < 25;i += 1) {
-    //    MTSort(i, 5e7);
-    //}
+   /* cout << "问题规模为：" << TESTSCALE << "; 随机数最大值为："<< MAXVAL << endl;
+    testObj.testSelectSort(TESTSCALE, MAXVAL);
+    testObj.testMergeSort(TESTSCALE, MAXVAL);
+    testObj.testQuickSort(TESTSCALE, MAXVAL);
+    testObj.testShellSort(TESTSCALE, MAXVAL);
+    testObj.testRadixSort(TESTSCALE, MAXVAL);*/
+   
 
 
     //大数排序部分
-    testObj.testSelectSort_BigInt(500);
-    testObj.testMergeSort_BigInt(500);
-    testObj.testQuickSort_BigInt(500);
-    testObj.testShellSort_BigInt(500);
-    testObj.testRadixSort_BigInt(500);
+    /*cout << "大数排序-问题规模为：" << TESTSCALE << "; 随机位数最大值为：" << 99 << endl;
+    testObj.testSelectSort_BigInt(TESTSCALE);
+    testObj.testMergeSort_BigInt(TESTSCALE);
+    testObj.testQuickSort_BigInt(TESTSCALE);
+    testObj.testShellSort_BigInt(TESTSCALE);
+    testObj.testRadixSort_BigInt(TESTSCALE);*/
 
+    //多线程排序
+    //MTSort(1, 1e7);
+    cout << "多线程排序-问题规模为：" << 2e7 << endl;
+    for (int i = 1;i < 25;i += 1)
+    {
+        MTSort(i, 2e7);
+    }
 
-	std::cout << "Hello World!\n";
+    char ch = getchar();
+    //std::cout << "Hello World!\n";
+    return 0;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

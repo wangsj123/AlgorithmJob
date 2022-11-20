@@ -4,9 +4,9 @@ using namespace std;
 
 typedef struct BigInt //定义大整数
 {
-	int Length;
+	int Length;       //大数的位数
 	int Sign;		  //整数符号位,1为正数，-1为负数
-	string Value;
+	string Value;     //存储大数各位的数字字符
 
 	BigInt() {
 		this->Length = 0;

@@ -211,7 +211,68 @@ void CUtilSort::RadixSort(int arr[], int n) {
 	}
 	delete[] tmp;
 	delete[] tmpInd;
+}
 
+int CUtilSort::_preTreatment(int arr[], int n)
+{
+	int minVal = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] < minVal)
+		{
+			minVal = arr[i];
+		}
+	}
+	if (minVal < 0)
+	{
+		for (int i = 0; i < n; i++) {
+			arr[i] -= minVal;
+		}
+	}
+
+	return minVal;
+}
+
+void CUtilSort::LSDRadixSort(int arr[], int n)
+{
+	int minVal = _preTreatment(arr, n);
+	int maxVal = 0;
+	int exp = 1;
+	int* buf = new int[n];
+	//找到最大值作为循环停止的标准 
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] > maxVal)
+		{
+			maxVal = arr[i];
+		}
+	}
+	//从低位到高位分配 	
+	while (maxVal >= exp)
+	{
+		int cnt[10];
+		memset(cnt, 0, sizeof(cnt));
+		for (int i = 0; i < n; i++)
+		{
+			int digit = (arr[i] / exp) % 10;
+			cnt[digit]++;
+		}
+		for (int i = 1; i < 10; i++)
+		{
+			cnt[i] += cnt[i - 1];
+		}
+		for (int i = n - 1; i >= 0; i--)
+		{
+			int digit = (arr[i] / exp) % 10;
+			buf[--cnt[digit]] = arr[i];
+		}
+		memcpy(arr, buf, sizeof(int) * n);
+		exp = exp * 10;
+	}
+	for (int i = 0; i < n; i++) {
+		arr[i] += minVal;
+	}
+	delete buf;
 }
 
 
